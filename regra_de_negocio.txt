@@ -1,0 +1,11 @@
+Uma venda pode estar ou não relacionada a uma mesa e a um funcionário,
+pois ela pode também ser realizada diretamente pelo caixa.
+
+Um funcionário do tipo "garçom" terá sua comissão gerada ao final do dia a partir
+das vendas feitas em uma mesa, em que ele foi relacionado.
+
+Haverá um grupo de tipos de funcionários, eles são, inicialmente:
+Garçons, gerentes e atendentes.
+
+Estes funcionários serão inclusos na venda em que eles atendem, e será 
+gerada uma comissão de 10% em relação ao valor total da venda.

@@ -1,0 +1,272 @@
+################################################################################################################################################
+
+Verificando as tabelas, views, sequências, índices do banco.
+Comando: "\d"
+
+livro=# \d
+                  Lista de relaþ§es
+ Esquema |        Nome        |   Tipo    |   Dono
+---------+--------------------+-----------+----------
+ public  | comissao           | tabela    | postgres
+ public  | comissao_id_seq    | sequÛncia | postgres
+ public  | funcionario        | tabela    | postgres
+ public  | funcionario_id_seq | sequÛncia | postgres
+ public  | item_venda         | tabela    | postgres
+ public  | item_venda_id_seq  | sequÛncia | postgres
+ public  | log_produto        | tabela    | postgres
+ public  | log_produto_id_seq | sequÛncia | postgres
+ public  | log_produtos       | tabela    | postgres
+ public  | mesa               | tabela    | postgres
+ public  | mesa_id_seq        | sequÛncia | postgres
+ public  | produto            | tabela    | postgres
+ public  | produto_id_seq     | sequÛncia | postgres
+ public  | venda              | tabela    | postgres
+ public  | venda_id_seq       | sequÛncia | postgres
+ public  | vendas_do_dia      | visÒo     | postgres
+(16 registros)
+
+################################################################################################################################################
+
+Visualizando as constraints e os dados de uma tabela.
+Comando: "\d <nome_da_tabela>"
+
+livro=# \d venda
+                                           Tabela "public.venda"
+      Coluna      |            Tipo             | Collation | Nullable |              Default
+------------------+-----------------------------+-----------+----------+-----------------------------------
+ id               | integer                     |           | not null | nextval('venda_id_seq'::regclass)
+ venda_codigo     | character varying(20)       |           |          |
+ venda_valor      | real                        |           |          |
+ venda_total      | real                        |           |          |
+ venda_desconto   | real                        |           |          |
+ venda_situacao   | character varying(1)        |           |          | 'A'::character varying
+ data_criacao     | timestamp without time zone |           |          |
+ data_atualizacao | timestamp without time zone |           |          |
+ funcionario_id   | integer                     |           |          |
+ mesa_id          | integer                     |           |          |
+═ndices:
+    "venda_pkey" PRIMARY KEY, btree (id)
+Restriþ§es de verificaþÒo:
+    "venda_venda_total_check" CHECK (venda_total > 0::double precision)
+Restriþ§es de chave estrangeira:
+    "venda_funcionario_id_fkey" FOREIGN KEY (funcionario_id) REFERENCES funcionario(id)
+    "venda_mesa_id_fkey" FOREIGN KEY (mesa_id) REFERENCES mesa(id)
+Referenciada por:
+    TABLE "item_venda" CONSTRAINT "item_venda_venda_id_fkey" FOREIGN KEY (venda_id) REFERENCES venda(id)
+
+################################################################################################################################################
+
+Listando os tipos de dados com detalhes.
+Comando: \dt+<tabela>
+
+livro=# \dt+venda
+                          Lista de relaþ§es
+ Esquema |     Nome      |  Tipo  |   Dono   |  Tamanho   | DescriþÒo
+---------+---------------+--------+----------+------------+-----------
+ public  | comissao      | tabela | postgres | 8192 bytes |
+ public  | funcionario   | tabela | postgres | 8192 bytes |
+ public  | item_venda    | tabela | postgres | 8192 bytes |
+ public  | log_produto   | tabela | postgres | 8192 bytes |
+ public  | log_produtos  | tabela | postgres | 0 bytes    |
+ public  | mesa          | tabela | postgres | 8192 bytes |
+ public  | produto       | tabela | postgres | 8192 bytes |
+ public  | venda         | tabela | postgres | 8192 bytes |
+ public  | vendas_do_dia | visÒo  | postgres | 0 bytes    |
+(9 registros)
+
+################################################################################################################################################
+
+Listando as tabelas.
+Comando: \dt
+
+livro=# \dt
+             Lista de relaþ§es
+ Esquema |     Nome     |  Tipo  |   Dono
+---------+--------------+--------+----------
+ public  | comissao     | tabela | postgres
+ public  | funcionario  | tabela | postgres
+ public  | item_venda   | tabela | postgres
+ public  | log_produto  | tabela | postgres
+ public  | log_produtos | tabela | postgres
+ public  | mesa         | tabela | postgres
+ public  | produto      | tabela | postgres
+ public  | venda        | tabela | postgres
+(8 registros)
+
+################################################################################################################################################
+
+Listando os índices.
+Comando: \di
+
+livro=# \di
+                       Lista de relaþ§es
+ Esquema |       Nome        |  Tipo  |   Dono   |    Tabela
+---------+-------------------+--------+----------+--------------
+ public  | comissao_pkey     | Ýndice | postgres | comissao
+ public  | funcionario_pkey  | Ýndice | postgres | funcionario
+ public  | item_venda_pkey   | Ýndice | postgres | item_venda
+ public  | log_produto_pkey  | Ýndice | postgres | log_produto
+ public  | log_produtos_pkey | Ýndice | postgres | log_produtos
+ public  | mesa_pkey         | Ýndice | postgres | mesa
+ public  | produto_pkey      | Ýndice | postgres | produto
+ public  | venda_pkey        | Ýndice | postgres | venda
+(8 registros)
+
+################################################################################################################################################
+
+Listando as sequências.
+Comando: \ds
+
+livro=# \ds
+                  Lista de relaþ§es
+ Esquema |        Nome        |   Tipo    |   Dono
+---------+--------------------+-----------+----------
+ public  | comissao_id_seq    | sequÛncia | postgres
+ public  | funcionario_id_seq | sequÛncia | postgres
+ public  | item_venda_id_seq  | sequÛncia | postgres
+ public  | log_produto_id_seq | sequÛncia | postgres
+ public  | mesa_id_seq        | sequÛncia | postgres
+ public  | produto_id_seq     | sequÛncia | postgres
+ public  | venda_id_seq       | sequÛncia | postgres
+(7 registros)
+
+################################################################################################################################################
+
+Listando as views.
+Comando: \dv
+
+livro=# \dv
+             Lista de relaþ§es
+ Esquema |     Nome      | Tipo  |   Dono
+---------+---------------+-------+----------
+ public  | vendas_do_dia | visÒo | postgres
+(1 registro)
+
+################################################################################################################################################
+
+Listando as tabelas do sistema.
+Comando: \dS
+
+livro=# \dS
+                          Lista de relaþ§es
+  Esquema   |              Nome               |   Tipo    |   Dono
+------------+---------------------------------+-----------+----------
+ pg_catalog | pg_aggregate                    | tabela    | postgres
+ pg_catalog | pg_am                           | tabela    | postgres
+ pg_catalog | pg_amop                         | tabela    | postgres
+ pg_catalog | pg_amproc                       | tabela    | postgres
+ pg_catalog | pg_attrdef                      | tabela    | postgres
+ pg_catalog | pg_attribute                    | tabela    | postgres
+ pg_catalog | pg_auth_members                 | tabela    | postgres
+ pg_catalog | pg_authid                       | tabela    | postgres
+ pg_catalog | pg_available_extension_versions | visÒo     | postgres
+ pg_catalog | pg_available_extensions         | visÒo     | postgres
+ pg_catalog | pg_cast                         | tabela    | postgres
+ pg_catalog | pg_class                        | tabela    | postgres
+ pg_catalog | pg_collation                    | tabela    | postgres
+ pg_catalog | pg_config                       | visÒo     | postgres
+ pg_catalog | pg_constraint                   | tabela    | postgres
+ pg_catalog | pg_conversion                   | tabela    | postgres
+ pg_catalog | pg_cursors                      | visÒo     | postgres
+ pg_catalog | pg_database                     | tabela    | postgres
+ pg_catalog | pg_db_role_setting              | tabela    | postgres
+ pg_catalog | pg_default_acl                  | tabela    | postgres
+ pg_catalog | pg_depend                       | tabela    | postgres
+ pg_catalog | pg_description                  | tabela    | postgres
+ pg_catalog | pg_enum                         | tabela    | postgres
+ pg_catalog | pg_event_trigger                | tabela    | postgres
+ pg_catalog | pg_extension                    | tabela    | postgres
+ pg_catalog | pg_file_settings                | visÒo     | postgres
+-- Mais  --
+
+################################################################################################################################################
+
+Listando os esquemas.
+Comando: \dn
+
+livro=# \dn
+ Lista de esquemas
+  Nome  |   Dono
+--------+----------
+ public | postgres
+(1 registro)
+
+################################################################################################################################################
+
+Listando os privilégios.
+Comando: \dp
+
+livro=# \dp
+                                        PrivilÚgios de acesso
+ Esquema |        Nome        |   Tipo    | PrivilÚgios de acesso | PrivilÚgios de coluna | PolÝticas
+---------+--------------------+-----------+-----------------------+-----------------------+-----------
+ public  | comissao           | tabela    |                       |                       |
+ public  | comissao_id_seq    | sequÛncia |                       |                       |
+ public  | funcionario        | tabela    |                       |                       |
+ public  | funcionario_id_seq | sequÛncia |                       |                       |
+ public  | item_venda         | tabela    |                       |                       |
+ public  | item_venda_id_seq  | sequÛncia |                       |                       |
+ public  | log_produto        | tabela    |                       |                       |
+ public  | log_produto_id_seq | sequÛncia |                       |                       |
+ public  | log_produtos       | tabela    |                       |                       |
+ public  | mesa               | tabela    |                       |                       |
+ public  | mesa_id_seq        | sequÛncia |                       |                       |
+ public  | produto            | tabela    |                       |                       |
+ public  | produto_id_seq     | sequÛncia |                       |                       |
+ public  | venda              | tabela    |                       |                       |
+ public  | venda_id_seq       | sequÛncia |                       |                       |
+ public  | vendas_do_dia      | visÒo     |                       |                       |
+(16 registros)
+
+################################################################################################################################################
+
+Listando os usuários.
+Comando: \du
+
+livro=# \du
+                                    Lista de roles
+ Nome da role |                         Atributos                         | Membro de
+--------------+-----------------------------------------------------------+-----------
+ postgres     | Super-usußrio, Cria role, Cria BD, ReplicaþÒo, Ignora RLS | {}
+
+################################################################################################################################################
+
+Listando os grupos.
+Comando: \dg
+
+livro=# \dg
+                                    Lista de roles
+ Nome da role |                         Atributos                         | Membro de
+--------------+-----------------------------------------------------------+-----------
+ postgres     | Super-usußrio, Cria role, Cria BD, ReplicaþÒo, Ignora RLS | {}
+
+################################################################################################################################################
+
+Listando todos os bancos do servidor, junto dos seus donos e codificações.
+Comando: \l
+
+livro=# \l
+                                          Lista dos bancos de dados
+   Nome    |   Dono   | CodificaþÒo |        Collate         |         Ctype          | PrivilÚgios de acesso
+-----------+----------+-------------+------------------------+------------------------+-----------------------
+ livro     | postgres | UTF8        | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ postgres  | postgres | UTF8        | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8        | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |             |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8        | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |             |                        |                        | postgres=CTc/postgres
+(4 registros)
+
+################################################################################################################################################
+
+Comandos gerais:
+
+\e - Abre o editor com a última consulta.
+\? - Para receber ajuda a respeito dos comandos do psql.
+\h * - Para receber ajuda a respeito de todos comandos.
+\h <nome do comando> - Para receber ajuda em relação a um comando em específico(ex: \h alter table).
+\H - Para ativar ou desativar a saída em HTML.
+\encoding - Exibe a codificação atual.
+\password - Para alterar a senha do usuário conectado.
+\conninfo - Informações sobre o banco de dados conectado e a conexão.
+################################################################################################################################################
